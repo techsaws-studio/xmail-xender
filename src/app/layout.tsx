@@ -3,7 +3,7 @@ import { Work_Sans } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Header } from "@/components/partials/header";
+import { ConditionalHeader } from "@/components/conditional-header";
 
 import "../styles/globals.css";
 import "../styles/tiptap.css";
@@ -57,7 +57,7 @@ export default function RootLayout({
       >
         <TooltipProvider delayDuration={150}>
           <Toaster />
-          <Header />
+          <ConditionalHeader />
           {children}
         </TooltipProvider>
       </body>
