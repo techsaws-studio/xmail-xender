@@ -5,7 +5,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { fromName, from, to, cc, bcc, subject, html, attachments } = body;
+    const { fromName, from, to, replyTo, cc, bcc, subject, html, attachments } =
+      body;
     if (!fromName || !from || !to || !subject || !html) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
@@ -17,6 +18,7 @@ export async function POST(req: Request) {
       fromName,
       fromEmail: from,
       to,
+      replyTo,
       cc,
       bcc,
       subject,

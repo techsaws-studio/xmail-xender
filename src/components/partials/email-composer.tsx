@@ -44,6 +44,7 @@ const formSchema = z.object({
   ext: z.nativeEnum(DomainExtension),
 
   to: z.string().email("Invalid email"),
+  replyTo: z.string().email("Invalid reply-to").optional(),
   cc: z.string().optional(),
   bcc: z.string().optional(),
 
@@ -134,6 +135,7 @@ export default function EmailComposer() {
         fromName: values.fromName,
         from: fullFromEmail,
         to: values.to,
+        replyTo: values.replyTo || null,
         cc: values.cc || null,
         bcc: values.bcc || null,
         subject: values.subject,
@@ -150,7 +152,17 @@ export default function EmailComposer() {
       setStatus("success");
 
       editor.commands.clearContent();
-      form.reset();
+      form.reset({
+        fromName: "",
+        fromUser: "",
+        fromOrg: "",
+        ext: DomainExtension.US,
+        to: "",
+        replyTo: "",
+        cc: "",
+        bcc: "",
+        subject: "",
+      });
       setAttachments([]);
       setHtml("");
       setShowCC(false);
@@ -216,6 +228,15 @@ export default function EmailComposer() {
         <Input
           placeholder="recipient@example.com"
           {...form.register("to")}
+          className="h-[50px] border-border bg-input"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Reply To (optional)</Label>
+        <Input
+          placeholder="reply@example.com"
+          {...form.register("replyTo")}
           className="h-[50px] border-border bg-input"
         />
       </div>
